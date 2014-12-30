@@ -96,6 +96,49 @@ def hand_percentages(n=700*1000):
 def main():
 	poker(hands)
 
+'''Alternate implementation 1'''
+
+def group(items):
+	groups = [(items.count(x),x) for x in set(items)]
+	return sorted(groups, reverse=True)
+
+def unzip(iterable):
+	"""Returns a tuple of lists from list of tuples"""
+	return zip(*iterable)
+
+
+def hand_rank_alt(hand):
+	"Return the value of the hand rank"
+	groups = group(['--23456789TJQKA'.index(r) for r,s in hand])
+	counts, ranks = unzip(groups)
+	if ranks == (14, 5, 4, 3, 2): ranks = (5, 4, 3, 2, 1)
+	straight = len(ranks) == 5 and max(ranks) - min(ranks) = 4
+	flush = len(set([s for r,s in hand])) == 1
+	return (9 if (5,) == counts else
+		    8 if straight and flush else
+		    7 if (4, 1) == counts else
+		    6 if (3, 2) == counts else
+		    5 if flush else
+		    4 if straight else
+		    3 if (3,1,1) == counts else
+		    2 if (2,2,1) == counts else
+		    1 if (2,1,1,1) == counts else
+		    0), ranks
+
+'''Alternate implementation 2'''
+
+
+count_rankings = {(5,):9, (4,1):7, (3,2):6, (3,1,1):3, (2,2,1):2, (2,1,1,1):1, (1,1,1,1,1):0}
+
+def hand_rank_table(hand):
+	groups = group(['--23456789TJQKA'].index(r) for r,s in hand)
+	counts, ranks = unzip(groups)
+	if ranks == (14, 5, 4, 3, 2): ranks = (5, 4, 3, 2, 1)
+	straight = len(ranks) == 5 and max(ranks) - min(ranks) = 4
+	flush = len(set([s for r,s in hand])) == 1
+	return max(count_rankings[counts], 4*straight + 5*flush)
+	
+
 
 if __name__ == "__main__":
-	main(argv[1:])
+	main()
