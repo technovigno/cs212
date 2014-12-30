@@ -1,8 +1,8 @@
 import random
-
+from collections import defaultdict
 
 def swap(p,i,j):
-	p[i], p][j] = p[j], p[i]
+	p[i], p[j] = p[j], p[i]
 
 def knuth_shuffle(p):
 	"""Knuths shuffle algo which is gives every element an equally likely chance to be shuffled"""
@@ -12,12 +12,12 @@ def knuth_shuffle(p):
 
 def shuffle1(p):
     """Simple (wrong) shuffle which might not have a deterministic end"""
-	n = len(p)
-	swapped = [False] * n
-	while not all(swapped):
-		i,j = random.randrange(n), random.randrange(n)
-		swap(p, i, j)
-		swapped[i] = swapped[j] = True
+    n = len(p)
+    swapped = [False] * n
+    while not all(swapped):
+    	i,j = random.randrange(n), random.randrange(n)
+    	swap(p, i, j)
+    	swapped[i] = swapped[j] = True
 
 def shuffle2(p):
 	"""Variation of a simple (wrong) shuffle"""
@@ -35,7 +35,7 @@ def shuffle3(p):
 		swap(p, i, random.randrange(n))
 
 
-def test_shuffle(shuffler, deck='abcd', n=10000):
+def test_shuffle(shuffler, deck='abcd', n=100000):
 	counts = defaultdict(int)
 	for _ in range(n):
 		input = list(deck)
@@ -50,7 +50,7 @@ def test_shuffle(shuffler, deck='abcd', n=10000):
 		print "%s:%4.1f" % (item, count * 100./n),
 	print 
 
-def test_shufflers(shufflers = [knuth_shuffle, shuffle1, shuffle2, shuffle3], decks=['abc', 'ab']):
+def test_shufflers(shufflers=[knuth_shuffle, shuffle1, shuffle2, shuffle3], decks=['abcd']):
 	for deck in decks:
 		print
 		for f in shufflers:
@@ -59,11 +59,8 @@ def test_shufflers(shufflers = [knuth_shuffle, shuffle1, shuffle2, shuffle3], de
 def factorial(n):
 	return 1 if n <= 1 else n * factorial(n-1)
 
-
-
 def main():
 	test_shufflers()
 
-
-if "__name__" == "__main__":
-	main(argv[1:])
+if __name__ == "__main__":
+	main()
