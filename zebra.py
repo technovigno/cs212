@@ -21,7 +21,7 @@ def instrument_fn(fn, *args):
 
 def zebra_puzzle():
     "Return a tuple (WATER, ZEBRA indicating their house numbers."
-    houses = first, _. middle, _, _ = [1,2,3,4,5]
+    houses = first, _, middle, _, _ = [1,2,3,4,5]
     orderings=list(itertools.permutations(houses))
     return next((WATER, ZEBRA)
                 for (red, green, ivory, yellow, blue) in c(orderings)
@@ -43,3 +43,8 @@ def zebra_puzzle():
                 if nextto(Chesterfields, fox)
                 if nextto(Kools, horse)
                 )
+def main():
+    instrument_fn(zebra_puzzle)
+
+if __name__ == "__main__":
+    main()
